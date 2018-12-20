@@ -140,6 +140,52 @@ function bSort(arr, min, max){
   return output;
 }
 
+function sortInPlace(arr){
+  let currIndex = arr.length;
+  let temp, random;
+  while(currIndex!==0){
+    random = Math.floor(Math.random()*currIndex);
+    currIndex--;
+    temp = arr[currIndex];
+    arr[currIndex] = arr[random];
+    arr[random] = temp;
+  }
+  return arr;
+}
+
+function sortBooks(arr){
+  countM++;
+  if(arr.length <= 1){
+    return arr;
+  }
+  const mid = Math.floor(arr.length/2);
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid, arr.length);
+  left = sortBooks(left);
+  right = sortBooks(right);
+  return mergeBook(left, right, arr);
+}
+
+function mergeBook(l, r, arr){
+  let leftIndex = 0;
+  let rightIndex = 0;
+  let outputIndex = 0;
+  while(leftIndex < l.length && rightIndex<r.length){
+    countM++;
+    if(l[leftIndex]<r[rightIndex]){
+      arr[outputIndex++] = l[leftIndex++];
+    } else {
+      arr[outputIndex++] = r[rightIndex++];
+    }
+  }
+  for(let i=leftIndex; i<l.length; i++){
+    arr[outputIndex++] = l[i];
+  }
+  for(let i=rightIndex; i<r.length; i++){
+    arr[outputIndex++] = r[i];
+  }
+  return arr;
+}
 
 function main(){
   const str = '89 30 25 32 72 70 51 42 25 24 53 55 78 50 13 40 48 32 26 2 14 33 45 72 56 44 21 88 27 68 15 62 93 98 73 28 16 46 87 28 65 38 67 16 85 63 23 69 64 91 9 70 81 27 97 82 6 88 3 7 46 13 11 64 76 31 26 38 28 13 17 69 90 1 6 7 64 43 9 73 80 98 46 27 22 87 49 83 6 39 42 51 54 84 34 53 78 40 14 5';
@@ -155,7 +201,15 @@ function main(){
   // console.log(countM);
   //console.log(countQ);
 
-  bucketSort([1,10,9,6,8,8,7,4,5,6,5], 1, 10);
+  //bucketSort([1,10,9,6,8,8,7,4,5,6,5], 1, 10);
+
+  // const arr2 = [1,2,3,4,5];
+  // const answer2 = sortInPlace(arr2);
+  // console.log(answer2);
+
+  const books = ['Book Z', 'Book E', 'Book D', 'Book A', 'Book AB', 'Doctor Zhivago'];
+  const answer3 = sortBooks(books);
+  console.log(answer3);
 }
 
 main();
